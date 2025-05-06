@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Choose Your Afterschool Activities</h1>
+    <div class="asa_list">
+        <div class="Monday">
+        <h2>Monday</h2>
+        <input type="radio" id="noneMonday" name="Monday">
+        <label for="noneMonday">No ASAs for this day</label>
+        <br>
+        </div> 
+
+        <div class="Tuesday">
+        <h2>Tuesday</h2>
+        <input type="radio" id="noneTuesday" name="Tuesday">
+        <label for="noneTuesday">No ASAs for this day</label>
+        <br>
+        </div>
+
+        <div class="Wednesday">
+        <h2>Wednesday</h2>
+        <input type="radio" id="noneWednesday" name="Wednesday">
+        <label for="noneWednesday">No ASAs for this day</label>
+        <br>
+        </div>
+
+        <div class="Thursday">
+        <h2>Thursday</h2>
+        <input type="radio" id="noneThursday" name="Thursday">
+        <label for="noneThursday">No ASAs for this day</label>
+        <br>
+        </div>
+
+        <div class="Friday">
+        <h2>Friday</h2>
+        <input type="radio" id="noneFriday" name="Friday">
+        <label for="noneFriday">No ASAs for this day</label>
+        <br>
+        </div>
+
+        <div class="overlayBackground">
+            <div class="overlay">
+            </div>
+        </div>
+
+    </div>
+    <button id="confirm_button" onclick="chooseAsas()">Confirm your choices</button>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="FormTwo.js"></script>
+</body>
+</html>

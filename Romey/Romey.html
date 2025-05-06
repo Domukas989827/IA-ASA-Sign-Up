@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1>ASA Upload Form</h1>
+    <div id="form">
+    <label for="asa_name">ASA Name</label> <br>
+    <input type="text" id="asa_name" placeholder="e.g. Basketball">
+    <br>
+    <label for="teachers">Choose the teacher:</label><br>
+    <select teacherName = "teacher_name" id="teachers">
+    </select>
+    <br>
+
+    <label for="begin_time">Start Time</label><br>
+    <input type="time" id="begin_time" placeholder="">
+    <br>
+    <label for="end_time">End Time</label><br>
+    <input type="time" id="end_time">
+    <br>
+    <label for="low_grade">Lowest Grade</label><br>
+    <input type="number" id="low_grade" placeholder="1">
+    <br>
+    <label for="high_grade">Highest Grade</label><br>
+    <input type="number" id="high_grade" placeholder="12">
+    <br>
+    <label for="slots">Available Slots</label><br>
+    <input type="number" id="slots" placeholder="20">
+    <br>
+
+    <label for="weekday">Select what day the ASA will happen on:</label><br>
+    <select weekDay = "day" id="weekday">
+      <option value="Monday">Monday</option>
+      <option value="Tuesday">Tuesday</option>
+      <option value="Wednesday">Wednesday</option>
+      <option value="Thursday">Thursday</option>
+      <option value="Friday">Friday</option>
+    </select>
+    <br>
+    <label for="asa_description">Write a short description of the ASA:</label> <br>
+    <textarea id="asa_description" cols="30" rows="5" placeholder="In this ASA students will..."></textarea>
+    <button onclick="addAsa()" id="addAsa">Add ASA</button>
+    <br>
+    <h3>Teacher missing in the list?</h3>
+    <label for="teacher_name">First Name:</label>
+    <input type="text" id="teacher_name" placeholder="Jason">
+    <label for="teacher_surname">Last Name:</label>
+    <input type="text" id="teacher_surname" placeholder="Romey">
+    <button id="missing_teacher" onclick="addTeacher()">Add teacher</button>
+    <br>
+    <h2>Want to remove an ASA?</h2>
+    <label for="asaToRemove">Select ASA to remove:</label><br>
+    <select removeAsa = "asa" id="asaToRemove">
+    </select>
+    <button onclick="removeAsa()" id="removeAsa">Remove ASA from the list</button>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="Romey.js"></script>
+</body>
+</html>

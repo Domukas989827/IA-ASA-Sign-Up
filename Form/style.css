@@ -1,0 +1,116 @@
+.overlayBackground{
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    display:none;
+}
+.overlay {
+    background-color: rgb(209, 209, 209);
+    height:fit-content;
+    width:fit-content;
+    font-size: large;
+    padding:1%;
+}
+body {
+    background-color: #f0f8ff;
+    font-family: Arial, sans-serif;
+    margin: 10px;
+    line-height: 2.5;
+}
+.overlayBackground {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    overflow: hidden;
+}
+.overlay {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+    width: fit-content;
+    height: fit-content;
+}
+.overlay button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #dc6363;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+.overlay button:hover {
+    background-color: #ec3f3f;
+}
+.asa_list {
+    max-width: 600px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+ h1 {
+    text-align: center;
+    color: #333333;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+.asa-list label {
+    display: block;
+    margin: 10px 0 5px;
+    font-weight: bold;
+    color: #333333;
+}
+#confirm_button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size:25;
+    border-radius: 5px;
+}
+#confirm_button:hover {
+    background-color: #005f99;
+}
+.description_button {
+    cursor: pointer;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    padding:5px;
+    border-radius: 5px;
+    margin: 5px;
+}
+.description_button:hover {
+    background-color: #005f99;
+}
+.Monday, .Tuesday {
+    background-color: #cbe0ee;
+    border-radius: 5px;
+}
+.Tuesday {
+    background-color: #cbe0ee;
+}
+.Wednesday {
+    background-color: #cbe0ee;
+}
+.Thursday {
+    background-color: #cbe0ee;
+}
+.Friday {
+    background-color: #cbe0ee;
+}

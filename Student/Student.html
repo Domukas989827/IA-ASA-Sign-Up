@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>ASA Selection Form</title>
+</head>
+<body>
+    <div class="firstPage">
+        <div class="container">
+        <h1>Welcome To The ASA Selection Form</h1>
+        <div id="emailBox">
+            <label for="userEmail">Enter Email</label>
+            <input type="text" id="userEmail" placeholder="example@email.com">
+        </div>
+        <div id="parentBox">
+            <input type="checkbox" id="parentBox">
+            <label for="parentBox"> I am a parent</label>
+        </div>
+        <button onclick="signIn()" id="signIn">Enter Form</button>
+        <br>
+        <label for="logIn">Not my first time completing this form:</label>
+        <button onclick="logIn()" id="logIn">Enter Form Again</button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="Student.js"></script>
+</body>
+</html>
