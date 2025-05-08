@@ -26,7 +26,7 @@ setTimeout(async () => {
                     document.querySelector(`.${asaDays[i]}`).innerHTML += `
                     <input type="radio" id="${asaName}" name="${asaDays[i]}">
                     <label for="${asaName}">${data[i].name}</label>
-                    <button onclick="overlayPopUp(${asaActualIds[i]})">Short description</button>
+                    <button class="description_button" onclick="overlayPopUp(${asaActualIds[i]})">Short description</button>
                     <br>
                     Duration: ${data[i].begin_time} - ${data[i].end_time} <br>
                     Available places left: ${data[i].slots} out of ${data[i].initial_slots}<br>

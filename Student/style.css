@@ -14,14 +14,15 @@ body {
 .container {
     text-align: center;
     background-color: #ffffff;
+    margin: 30px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 700px;
+    width: auto;
 }
 h1 {
     color: #333333;
-    font-size: 40;
+    font-size: 2.5rem;
     margin-bottom: 20px;
 }
 #parentBox {
@@ -52,6 +53,8 @@ button {
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+    background-color: #007acc;
+    color: white;
 }
 button:hover {
     background-color: darkgray;

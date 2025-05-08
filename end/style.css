@@ -27,3 +27,12 @@ button {
 button:hover {
     background-color: #005f99;
 }
+.container {
+    text-align: center;
+    background-color: #ffffff;
+    margin: 30px;
+    padding:20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: auto;
+}
