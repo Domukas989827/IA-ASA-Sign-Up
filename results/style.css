@@ -29,3 +29,11 @@ h3 {
     padding-top:20px;
     text-align: center;
 }
+button {
+    background-color: #007acc;
+    color: white;
+}
+button:hover {
+    cursor:pointer;
+    background-color:#005f99;
+}
