@@ -91,9 +91,16 @@ setTimeout(async () => {
                 asaDays[i]='no'
             }
         }
+        for (p=0;p<asaDays.length;p++) {
+            if (asaDays[p]==='no') {
+                asaDays.splice(p, 1)
+                asaActualIds.splice(p,1)
+                asaSlotsLeft.splice(p,1)
+                p-=1
+            }
+        }
     }
 }, 1)
-
 async function chooseAsas(){
     if (document.querySelector('input[name="Monday"]:checked') 
         && document.querySelector('input[name="Tuesday"]:checked')
@@ -101,48 +108,37 @@ async function chooseAsas(){
         && document.querySelector('input[name="Thursday"]:checked')
         && document.querySelector('input[name="Friday"]:checked') ) {
         const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-        for (k=0;k<asaNumber;k++) {
-            if (k === 0) {
-                
-            }
+        for (k=0;k<asaDays.length;k++) {
             if (asaDays[k] === 'replaced') {
                 console.log ('at', k, 'it was replaced')
             } else {
-                console.log('we got to here')
-                    if (!document.querySelector(`#none`+asaDays[k]).checked) {
-                        console.log('this is better')
-                        if (document.querySelector(`#${asaIds[k]}`).checked) {
-                            const { error: errorOne } = await supabase
-                                .from('members')
-                                .insert({
-                                asa: asaActualIds[k],
-                                user: userId
-                                })
-                            if (errorOne) {
-                                console.log('Error:', errorOne)
-                            }
-
-                            console.log("add successful")
-
-                            const {error: errorTwo} = await supabase
-                            .from('asa')
-                            .update({slots: asaSlotsLeft[k]-1})
-                            .eq('id', asaActualIds[k])
-                            if (errorTwo) {
-                                console.log('supabase error when updating slots:', errorTwo)
-                            }
-                            console.log('for asa:',asaActualIds[k],'there are slots:', asaSlotsLeft[k]-1)
+                if (!document.querySelector(`#none`+asaDays[k]).checked) {
+                    if (document.querySelector(`#${asaIds[k]}`).checked) {
+                        const { error: errorOne } = await supabase
+                            .from('members')
+                            .insert({
+                            asa: asaActualIds[k],
+                            user: userId
+                            })
+                        if (errorOne) {
+                            console.log('Error:', errorOne)
                         }
-                    } for (p=0;p<asaDays.length;p++) {
-                        if (asaDays[p]==='no') {
-                            asaDays.splice(p, 1)
-                            p-=1
+
+                        console.log("add successful")
+
+                        const {error: errorTwo} = await supabase
+                        .from('asa')
+                        .update({slots: asaSlotsLeft[k]-1})
+                        .eq('id', asaActualIds[k])
+                        if (errorTwo) {
+                            console.log('supabase error when updating slots:', errorTwo)
                         }
-                        console.log(asaDays)
-                    }  
+                        console.log('for asa:',asaActualIds[k],'there are slots:', asaSlotsLeft[k]-1)
+                    }
                 }
+            }
         }
-        window.location.replace("../end/end.html")
+        // window.location.replace("../end/end.html")
     } else {
         alert('You have not checked an option for every day (even if it is No ASAs for this day)')
     }

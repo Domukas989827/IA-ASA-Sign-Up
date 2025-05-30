@@ -50,11 +50,10 @@ setTimeout(async () => {
         for (p=0;p<asaDays.length;p++) {
             if (asaDays[p]==='no') {
                 asaDays.splice(p, 1)
+                asaActualIds.splice(p, 1)
                 p-=1
             }
         }
-    } else{
-        console.log(error)
     }
 }, 1)
 
@@ -65,7 +64,7 @@ async function chooseAsas(){
         && document.querySelector('input[name="Thursday"]:checked')
         && document.querySelector('input[name="Friday"]:checked') ) {
 
-        for (k=0;k<asaNumber;k++) {
+        for (k=0;k<asaDays.length;k++) {
             console.log(k)
             console.log(asaIds, asaDays)
             if (asaDays[k] === 'replaced') {

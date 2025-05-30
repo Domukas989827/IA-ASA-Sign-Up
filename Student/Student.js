@@ -242,6 +242,7 @@ function logIn() {
             
             userEmail = document.querySelector("#userEmail").value
             localStorage.setItem("user", userEmail)
+            
 
             const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
             const {data, error} = await supabase
@@ -255,6 +256,7 @@ function logIn() {
                 } else {
                     let userId = data[0].id
                     localStorage.setItem('id', userId)
+                    localStorage.setItem('grade', data[0].grade)
                     window.location.replace("../Form/FormTwo.html")
                 }
             
