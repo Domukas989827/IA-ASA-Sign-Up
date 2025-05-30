@@ -43,12 +43,19 @@ setTimeout(async () => {
                     asaNumber+=1
                     asaIds.push(asaName)
                 }
+            } else {
+                asaDays[i]='no'
+            }
+        }
+        for (p=0;p<asaDays.length;p++) {
+            if (asaDays[p]==='no') {
+                asaDays.splice(p, 1)
+                p-=1
             }
         }
     } else{
         console.log(error)
     }
-    console.log(asaDays)
 }, 1)
 
 async function chooseAsas(){
@@ -59,6 +66,8 @@ async function chooseAsas(){
         && document.querySelector('input[name="Friday"]:checked') ) {
 
         for (k=0;k<asaNumber;k++) {
+            console.log(k)
+            console.log(asaIds, asaDays)
             if (asaDays[k] === 'replaced') {
                 console.log ('at', k, 'it was replaced')            } else {
                     if (!document.querySelector(`#none`+asaDays[k]).checked) {
@@ -83,14 +92,14 @@ async function chooseAsas(){
                             .eq('id', asaActualIds[k])
                             if (errorOne) {
                                 console.log('supabase error when updating slots:', errorTwo)
-                    }
+                            }
                         }
                     } else {
-                        console.log(asaDays[k], 'is checked none')
+                        console.log(asaDays[k], 'is checked none', k)
                     }
             }
         }
-        window.location.replace("../end/end.html")
+        // window.location.replace("../end/end.html")
     } else {
         alert('Please check one option for every day (even if it is No ASAs for this day)')
     }
