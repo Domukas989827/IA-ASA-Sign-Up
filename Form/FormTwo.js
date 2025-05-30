@@ -87,6 +87,14 @@ setTimeout(async () => {
                     asaNumber+=1
                     asaIds.push(asaName)
                 }
+            } else {
+                asaDays[i]='no'
+            }
+        }
+        for (p=0;p<asaDays.length;p++) {
+            if (asaDays[p]==='no') {
+                asaDays.splice(p, 1)
+                p-=1
             }
         }
     } else{
