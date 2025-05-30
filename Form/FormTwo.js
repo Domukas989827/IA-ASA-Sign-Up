@@ -91,16 +91,7 @@ setTimeout(async () => {
                 asaDays[i]='no'
             }
         }
-        for (p=0;p<asaDays.length;p++) {
-            if (asaDays[p]==='no') {
-                asaDays.splice(p, 1)
-                p-=1
-            }
-        }
-    } else{
-        console.log(error)
     }
-    console.log(asaDays)
 }, 1)
 
 async function chooseAsas(){
@@ -142,8 +133,14 @@ async function chooseAsas(){
                             }
                             console.log('for asa:',asaActualIds[k],'there are slots:', asaSlotsLeft[k]-1)
                         }
-                    }
-            }
+                    } for (p=0;p<asaDays.length;p++) {
+                        if (asaDays[p]==='no') {
+                            asaDays.splice(p, 1)
+                            p-=1
+                        }
+                        console.log(asaDays)
+                    }  
+                }
         }
         window.location.replace("../end/end.html")
     } else {
