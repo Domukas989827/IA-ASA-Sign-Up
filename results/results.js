@@ -339,12 +339,10 @@ function sort() {
     }
 }
 
-
 //Links for website
 // Add ASA: https://domukas989827.github.io/IA-ASA-Sign-Up/Romey/Romey.html
 // Sign-Up for ASA: https://domukas989827.github.io/IA-ASA-Sign-Up/Student/Student.html
 // Results: https://domukas989827.github.io/IA-ASA-Sign-Up/results/results.html
-
 //Add update to github:
 // ctrl + ` for terminal
 // cd IA

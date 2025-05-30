@@ -13,6 +13,7 @@ function signIn() {
         } else {
             const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
             if (!document.querySelector('#parentBox').checked) {
+                console.log('parent box is not checked asdasdoasjdaosijdoasijd')
                 const { data, error } = await supabase
                 .from('users')
                 .select()
@@ -278,7 +279,7 @@ function logIn() {
                     .eq('parent_id', data[0].id)
                     let userId = dataOne[0].id
                     localStorage.setItem('id', userId)
-                    window.location.replace("../Form/Form.html")
+                    window.location.replace("../Form/FormTwo.html")
                 }
         }
     }, 2);

@@ -109,7 +109,9 @@ async function chooseAsas(){
             if (asaDays[k] === 'replaced') {
                 console.log ('at', k, 'it was replaced')
             } else {
+                console.log('we got to here')
                     if (!document.querySelector(`#none`+asaDays[k]).checked) {
+                        console.log('this is better')
                         if (document.querySelector(`#${asaIds[k]}`).checked) {
                             const { error: errorOne } = await supabase
                                 .from('members')
