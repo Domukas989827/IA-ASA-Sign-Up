@@ -15,7 +15,7 @@ const userInfo = [
 ]
 let memberData
 let asaFullData
-
+let tempParentDataLength
 setTimeout(async () => {
     const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     const {data: asaMemberData, error} = await supabase
@@ -81,20 +81,21 @@ setTimeout(async () => {
     if (errorFour) {
         console.log('Error when getting parent data', errorFour)
     }
-    
     for (c=0; c<userData.length; c++) {
         userInfo[0].push(userData[c].id)
         userInfo[1].push(userData[c].first_name)
         userInfo[2].push(userData[c].last_name)
         userInfo[3].push(userData[c].email)
         userInfo[4].push(userData[c].grade)
+
         for (d=0; d<parentData.length; d++) {
-            if (parentData[d].id === userData[c].parent_id) {
+        if (parentData[d] == null) {
+            console.log('this shouldnt be here')
+        }   else if (parentData[d].id === userData[c].parent_id) {
                 userInfo[5].push(parentData[d].email)
             }
         }
     }
-
     for (e=0;e<asas.length;e++) {
         const members = []
         for (f=0;f<asaMemberData.length;f++) {
