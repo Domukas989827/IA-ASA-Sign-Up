@@ -138,7 +138,7 @@ async function chooseAsas(){
                 }
             }
         }
-        // window.location.replace("../end/end.html")
+        window.location.replace("../end/end.html")
     } else {
         alert('You have not checked an option for every day (even if it is No ASAs for this day)')
     }
