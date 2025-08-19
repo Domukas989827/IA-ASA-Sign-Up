@@ -39,10 +39,10 @@ setTimeout(async () => {
                                     slots: asaSlotsLeft[y]+1,
                                     })
                                     .eq ('id', dataOne[b].asa)
+                                    asaSlotsLeft[y]+=1
                                     if (errorThree) {
                                         console.log('Error in updating slots:', errorThree)
                                     }
-                                    console.log('for', dataOne[b], 'slots are', asaSlotsLeft[y]+1)
                                 }
                             }
                         }
