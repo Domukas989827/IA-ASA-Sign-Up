@@ -59,6 +59,9 @@ setTimeout(async () => {
     const {data, error} = await supabase
             .from('asa')
             .select()
+    const {data: teacherData, error: teacherError} = await supabase
+        .from ('teachers')
+        .select()
     if (data) {
         for (i=0;i<data.length;i++) {
             let asaName = data[i].name.replaceAll(' ', '')
@@ -68,13 +71,18 @@ setTimeout(async () => {
                     document.querySelector(`.${asaDays[i]}`).innerHTML += `
                     <input type="radio" id="${asaName}" name="${asaDays[i]}">
                     <label for="${asaName}"> 
-                    ${data[i].name} 
+                    ${data[i].name} </label>
                     <button onclick="overlayPopUp(${asaActualIds[i]})" class="description_button">Short description</button> <br>
                     Duration: ${data[i].begin_time} - ${data[i].end_time} <br>
                     Available places left: ${data[i].slots} out of ${data[i].initial_slots}<br>
-                
-                    </label>
                     `
+                    for (t=0; t<teacherData.length; t++){
+                        if (data[i].teacher_id === teacherData[t].id) {
+                            document.querySelector(`.${asaDays[i]}`).innerHTML += `
+                            Teacher: ${teacherData[t].first_name} ${teacherData[t].last_name} <br>
+                            `
+                        }
+                    }
                     asaNumber+=1
                     asaIds.push(asaName)
 

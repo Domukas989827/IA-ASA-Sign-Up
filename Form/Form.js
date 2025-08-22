@@ -12,8 +12,11 @@ const asaSlotsLeft = []
 setTimeout(async () => {
     const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     const {data, error} = await supabase
-            .from('asa')
-            .select()
+        .from('asa')
+        .select()
+    const {data: teacherData, error: teacherError} = await supabase
+        .from ('teachers')
+        .select()
     if (data) {
         console.log('this is data', data)
         for (i=0;i<data.length;i++) {
@@ -31,6 +34,13 @@ setTimeout(async () => {
                     Duration: ${data[i].begin_time} - ${data[i].end_time} <br>
                     Available places left: ${data[i].slots} out of ${data[i].initial_slots}<br>
                     `
+                    for (t=0; t<teacherData.length; t++){
+                        if (data[i].teacher_id === teacherData[t].id) {
+                            document.querySelector(`.${asaDays[i]}`).innerHTML += `
+                            Teacher: ${teacherData[t].first_name} ${teacherData[t].last_name} <br>
+                            `
+                        }
+                    }
                     asaNumber+=1
                     asaIds.push(asaName)
 
