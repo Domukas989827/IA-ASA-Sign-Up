@@ -68,6 +68,8 @@ label {
 #confirm_button {
     margin-top: 20px;
     padding: 10px;
+    margin-left:40%;
+    margin-bottom:10px;
     background-color: #007acc;
     color: white;
     border: none;
