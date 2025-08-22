@@ -54,27 +54,37 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
- h1 {
+h1 {
     text-align: center;
     color: #333333;
-    font-size: 2rem;
-    margin-bottom: 20px;
+    font-size: 35pt;
+    background-color:#a5c5d8;
+    border-radius: 50px;
+}
+h2 {
+    text-align: center;
+    color: #333333;
+    font-size: 20pt;
+    background-color:#a5c5d8;
+    border-radius: 20px;
+    margin-top:0px;
 }
 label {
-    margin: 10px 0 5px;
     font-weight: bold;
     color: #333333;
+    font-size: 15pt;
+
 }
 #confirm_button {
     margin-top: 20px;
     padding: 10px;
-    margin-left:40%;
+    margin-left:32%;
     margin-bottom:10px;
     background-color: #007acc;
     color: white;
     border: none;
     cursor: pointer;
-    font-size:25;
+    font-size: 15pt;
     border-radius: 5px;
     justify-content:center;
 }
