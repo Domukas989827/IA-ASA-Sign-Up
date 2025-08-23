@@ -1,10 +1,7 @@
 const { createClient } = supabase;
 const SUPABASE_URL = 'https://dbwxeoshrqssbrvtggbf.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRid3hlb3NocnFzc2JydnRnZ2JmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2NzI2NTYsImV4cCI6MjA1NDI0ODY1Nn0.nf7q3-2sJI9uwQ2w-GxJ4iKUTZlYAjuYdy_pOMfiJBg'
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-//https://www.geeksforgeeks.org/javascript/how-to-wait-n-seconds-in-javascript/
+
 let userEmail = null
 function signIn() {
     setTimeout(async () => {
@@ -14,7 +11,7 @@ function signIn() {
         if (userEmail == '') {
             alert('The email is missing')
         } else {
-            const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+            const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
             if (!document.querySelector('#parentBox').checked) {
                 const { data, error } = await supabase
                 .from('users')
@@ -192,31 +189,7 @@ function addUserInfo() {
             if (error) {
                 console.log('supabase error:', error)
             } else {
-                    const {error: queueInsertError} = await supabase
-                    .from('queue')
-                    .insert({
-                        user: userEmail
-                    })
-                    let waitingPosition = 1
-                    while (0<1) {
-                        const {data: queueData, error: queueError} = await supabase
-                        .from('queue')
-                        .select()
-
-                        for (q=0; q<queueData.length;q++) {
-                            if (queueData[q].user === userEmail) {
-                                waitingPosition = q
-                            }
-                        }
-                        
-                        if (queueData[0].user === userEmail) {
-                            window.location.replace("../Form/Form.html")
-                        } else {
-                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
-                            await sleep(5000)
-                        }
-                    }
-                    
+                window.location.replace("../Form/Form.html")
             }
         }, 100);
 }
@@ -266,29 +239,7 @@ function addParentInfo() {
                 if (errorTwo) {
                     console.log(errorTwo)
                 } else {
-                    const {error: queueInsertError} = await supabase
-                    .from('queue')
-                    .insert({
-                        user: userEmail
-                    })
-                    let waitingPosition = 1
-                    while (0<1) {
-                        const {data: queueData, error: queueError} = await supabase
-                        .from('queue')
-                        .select()
-                        for (q=0; q<queueData.length;q++) {
-                            if (queueData[q].user === userEmail) {
-                                waitingPosition = q
-                            }
-                        }
-                        
-                        if (queueData[0].user === userEmail) {
-                            window.location.replace("../Form/Form.html")
-                        } else {
-                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
-                            await sleep(5000)
-                        }
-                    }
+                    window.location.replace("../Form/Form.html")
                 }
             }
         }, 4);
@@ -313,33 +264,10 @@ function logIn() {
                 } else if (data.length === 0) {
                     alert('Incorrect email')
                 } else {
-                    const {error: queueInsertError} = await supabase
-                    .from('queue')
-                    .insert({
-                        user: userEmail
-                    })
-                    let waitingPosition = 1
-                    while (0<1) {
-                        const {data: queueData, error: queueError} = await supabase
-                        .from('queue')
-                        .select()
-                        
-                        for (q=0; q<queueData.length;q++) {
-                            if (queueData[q].user === userEmail) {
-                                waitingPosition = q
-                            }
-                        }
-                        
-                        if (queueData[0].user === userEmail) {
-                            let userId = data[0].id
-                            localStorage.setItem('id', userId)
-                            localStorage.setItem('grade', data[0].grade)
-                            window.location.replace("../Form/FormTwo.html")
-                        } else {
-                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
-                            await sleep(5000)
-                        }
-                    } 
+                    let userId = data[0].id
+                    localStorage.setItem('id', userId)
+                    localStorage.setItem('grade', data[0].grade)
+                    window.location.replace("../Form/FormTwo.html")
                 }
             
         } else {
@@ -347,46 +275,24 @@ function logIn() {
             localStorage.setItem("user", userEmail)
 
             const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-            const {data, error} = await supabase
+            const {data: dataParents, error: errorParents} = await supabase
                 .from('parents')
                 .select ()
                 .eq('email', userEmail)
-                console.log("data is:", data)
+            const {data, error} = await supabase
+                .from('users')
+                .select ()
+                .eq('parent_id', dataParents[0].id)
+
                 if (error) {
                     console.log(error)
-                } else if (data.length === 0) {
+                } else if (dataParents.length === 0) {
                     alert('Incorrect email')
                 } else {
-                    const {error: queueInsertError} = await supabase
-                    .from('queue')
-                    .insert({
-                        user: userEmail
-                    })
-                    let waitingPosition = 1
-                    while (0<1) {
-                        const {data: queueData, error: queueError} = await supabase
-                        .from('queue')
-                        .select()
-
-                        for (q=0; q<queueData.length;q++) {
-                            if (queueData[q].user === userEmail) {
-                                waitingPosition = q
-                            }
-                        }
-                        
-                        if (queueData[0].user === userEmail) {
-                            const {data: dataOne, error: errorOne} = await supabase
-                        .from('users')
-                        .select ()
-                        .eq('parent_id', data[0].id)
-                        let userId = dataOne[0].id
-                        localStorage.setItem('id', userId)
-                        window.location.replace("../Form/FormTwo.html")
-                        } else {
-                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
-                            await sleep(5000)
-                        }
-                    }
+                    let userId = data[0].id
+                    localStorage.setItem('id', userId)
+                    localStorage.setItem('grade', data[0].grade)
+                    window.location.replace("../Form/FormTwo.html")
                 }
         }
     }, 2);

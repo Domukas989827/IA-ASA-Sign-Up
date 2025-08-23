@@ -5,38 +5,64 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 let userEmail=localStorage.getItem("user")
 console.log(userEmail)
 function fillFormAgain() {
-    setTimeout(async () => {
-        const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-        const {error: queueInsertError} = await supabase
-            .from('queue')
-            .insert({
-                user: userEmail
-            })
-        let waitingPosition = 1
-        while (0<1) {
-            const {data: queueData, error: queueError} = await supabase
-            .from('queue')
-            .select()
-
-            for (q=0; q<queueData.length;q++) {
-                if (queueData[q].user === userEmail) {
-                    waitingPosition = q
-                }
-            }
-                            
-            if (queueData[0].user === userEmail) {
-                window.location.replace("../Form/FormTwo.html")
-            } else {
-                alert("You are in the queue to access the ASA selection, please wait. There are", waitingPosition, "people in front of you.")
-            }
-            await sleep(3000)
-        }
-    }, 10)
+   window.location.replace("../Form/FormTwo.html")
 }
+const asaNames = []
+const asaDays = []
+const userId = localStorage.getItem('id')
+setTimeout(async () => {
+    const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    const {data: memberData, error: memberError} = await supabase
+    .from ('members')
+    .select()
+    .eq('user', userId)
 
-// const userId = localStorage.getItem('id')
-// setTimeout(async () => {
-//     const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-//     const {data: memberData, error: memberError} = await supabase
-// }, 1)
-// document.querySelector("#end_confirmation").innerHTML += 'hi'
+    const {data: asaData, error: asaError} = await supabase
+    .from ('asa')
+    .select()
+
+    console.log(memberData, asaData)
+    for (a=0; a<memberData.length; a++) {
+        for (b=0; b<asaData.length; b++) {
+            if (asaData[b].id === memberData[a].asa) {
+                asaNames.push(asaData[b].name)
+                asaDays.push(asaData[b].day)
+            }
+        }
+    }
+    for (c=0; c<asaNames.length; c++) {
+        if (asaDays[c] === "Monday") {
+            document.querySelector("#end_confirmation").innerHTML += `
+            ${asaDays[c]} - ${asaNames[c]} <br>
+            `
+        }
+    }
+    for (d=0; d<asaNames.length; d++) {
+        if (asaDays[d] === "Tuesday") {
+            document.querySelector("#end_confirmation").innerHTML += `
+            ${asaDays[d]} - ${asaNames[d]} <br>
+            `
+        }
+    }
+    for (e=0; e<asaNames.length; e++) {
+        if (asaDays[e] === "Wednesday") {
+            document.querySelector("#end_confirmation").innerHTML += `
+            ${asaDays[e]} - ${asaNames[e]} <br>
+            `
+        }
+    }
+    for (f=0; f<asaNames.length; f++) {
+        if (asaDays[f] === "Thursday") {
+            document.querySelector("#end_confirmation").innerHTML += `
+            ${asaDays[f]} - ${asaNames[f]} <br>
+            `
+        }
+    }
+    for (g=0; g<asaNames.length; g++) {
+        if (asaDays[g] === "Friday") {
+            document.querySelector("#end_confirmation").innerHTML += `
+            ${asaDays[g]} - ${asaNames[g]}
+            `
+        }
+    }
+}, 1)

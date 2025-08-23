@@ -110,11 +110,6 @@ async function chooseAsas(){
             }
         }
         const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-        const {error: deleteQueue} = await supabase
-        .from ('queue')
-        .delete ()
-        .eq ('user', userEmail)
-    
         window.location.replace("../end/end.html")
     } else {
         alert('Please check one option for every day (even if it is No ASAs for this day)')
