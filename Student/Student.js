@@ -13,7 +13,6 @@ function signIn() {
         } else {
             const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
             if (!document.querySelector('#parentBox').checked) {
-                console.log('parent box is not checked asdasdoasjdaosijdoasijd')
                 const { data, error } = await supabase
                 .from('users')
                 .select()
@@ -49,6 +48,11 @@ function signIn() {
                         <br>
                         <label for="userGrade">Select your grade:</label>
                         <select userGrade = "grade" id="user_grade">
+                        <option value="-3">Oak</option>
+                        <option value="-2">Linden</option>
+                        <option value="-1">Maple</option>
+                        <option value="0">Kindergarten</option>
+
                         <option value="1">1</option>
                         <option value="2">2</option>
                         <option value="3">3</option>
@@ -109,6 +113,11 @@ function signIn() {
                             <br>
                             <label for="userGrade">Select student's grade:</label>
                             <select userGrade = "grade" id="user_grade">
+                            <option value="-3">Oak</option>
+                            <option value="-2">Linden</option>
+                            <option value="-1">Maple</option>
+                            <option value="0">Kindergarten</option>
+                            
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>

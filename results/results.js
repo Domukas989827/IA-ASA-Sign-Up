@@ -86,7 +86,17 @@ setTimeout(async () => {
         userInfo[1].push(userData[c].first_name)
         userInfo[2].push(userData[c].last_name)
         userInfo[3].push(userData[c].email)
-        userInfo[4].push(userData[c].grade)
+        if (userData[c].grade === -3){
+            userInfo[4].push('Oak')
+        } else if (userData[c].grade === -2) {
+            userInfo[4].push('Linden')
+        } else if (userData[c].grade === -1){
+            userInfo[4].push('Maple')
+        } else if (userData[c].grade === 0){
+            userInfo[4].push('Kindergarten')
+        } else {
+            userInfo[4].push(userData[c].grade)
+        }
 
         for (d=0; d<parentData.length; d++) {
         if (parentData[d] == null) {
