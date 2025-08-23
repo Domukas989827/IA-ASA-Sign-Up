@@ -1,7 +1,10 @@
 const { createClient } = supabase;
 const SUPABASE_URL = 'https://dbwxeoshrqssbrvtggbf.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRid3hlb3NocnFzc2JydnRnZ2JmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2NzI2NTYsImV4cCI6MjA1NDI0ODY1Nn0.nf7q3-2sJI9uwQ2w-GxJ4iKUTZlYAjuYdy_pOMfiJBg'
-
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+//https://www.geeksforgeeks.org/javascript/how-to-wait-n-seconds-in-javascript/
 let userEmail = null
 function signIn() {
     setTimeout(async () => {
@@ -117,7 +120,7 @@ function signIn() {
                             <option value="-2">Linden</option>
                             <option value="-1">Maple</option>
                             <option value="0">Kindergarten</option>
-                            
+
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -189,9 +192,33 @@ function addUserInfo() {
             if (error) {
                 console.log('supabase error:', error)
             } else {
-                window.location.replace("../Form/Form.html")
+                    const {error: queueInsertError} = await supabase
+                    .from('queue')
+                    .insert({
+                        user: userEmail
+                    })
+                    let waitingPosition = 1
+                    while (0<1) {
+                        const {data: queueData, error: queueError} = await supabase
+                        .from('queue')
+                        .select()
+
+                        for (q=0; q<queueData.length;q++) {
+                            if (queueData[q].user === userEmail) {
+                                waitingPosition = q
+                            }
+                        }
+                        
+                        if (queueData[0].user === userEmail) {
+                            window.location.replace("../Form/Form.html")
+                        } else {
+                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
+                            await sleep(5000)
+                        }
+                    }
+                    
             }
-        }, 10);
+        }, 100);
 }
 
 function addParentInfo() {
@@ -238,9 +265,31 @@ function addParentInfo() {
                 localStorage.setItem('id', userId)
                 if (errorTwo) {
                     console.log(errorTwo)
+                } else {
+                    const {error: queueInsertError} = await supabase
+                    .from('queue')
+                    .insert({
+                        user: userEmail
+                    })
+                    let waitingPosition = 1
+                    while (0<1) {
+                        const {data: queueData, error: queueError} = await supabase
+                        .from('queue')
+                        .select()
+                        for (q=0; q<queueData.length;q++) {
+                            if (queueData[q].user === userEmail) {
+                                waitingPosition = q
+                            }
+                        }
+                        
+                        if (queueData[0].user === userEmail) {
+                            window.location.replace("../Form/Form.html")
+                        } else {
+                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
+                            await sleep(5000)
+                        }
+                    }
                 }
-                
-                window.location.replace("../Form/Form.html")
             }
         }, 4);
 }
@@ -258,15 +307,39 @@ function logIn() {
                 .from('users')
                 .select ()
                 .eq('email', userEmail)
+
                 if (error) {
                     console.log(error)
                 } else if (data.length === 0) {
                     alert('Incorrect email')
                 } else {
-                    let userId = data[0].id
-                    localStorage.setItem('id', userId)
-                    localStorage.setItem('grade', data[0].grade)
-                    window.location.replace("../Form/FormTwo.html")
+                    const {error: queueInsertError} = await supabase
+                    .from('queue')
+                    .insert({
+                        user: userEmail
+                    })
+                    let waitingPosition = 1
+                    while (0<1) {
+                        const {data: queueData, error: queueError} = await supabase
+                        .from('queue')
+                        .select()
+                        
+                        for (q=0; q<queueData.length;q++) {
+                            if (queueData[q].user === userEmail) {
+                                waitingPosition = q
+                            }
+                        }
+                        
+                        if (queueData[0].user === userEmail) {
+                            let userId = data[0].id
+                            localStorage.setItem('id', userId)
+                            localStorage.setItem('grade', data[0].grade)
+                            window.location.replace("../Form/FormTwo.html")
+                        } else {
+                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
+                            await sleep(5000)
+                        }
+                    } 
                 }
             
         } else {
@@ -284,13 +357,36 @@ function logIn() {
                 } else if (data.length === 0) {
                     alert('Incorrect email')
                 } else {
-                    const {data: dataOne, error: errorOne} = await supabase
-                    .from('users')
-                    .select ()
-                    .eq('parent_id', data[0].id)
-                    let userId = dataOne[0].id
-                    localStorage.setItem('id', userId)
-                    window.location.replace("../Form/FormTwo.html")
+                    const {error: queueInsertError} = await supabase
+                    .from('queue')
+                    .insert({
+                        user: userEmail
+                    })
+                    let waitingPosition = 1
+                    while (0<1) {
+                        const {data: queueData, error: queueError} = await supabase
+                        .from('queue')
+                        .select()
+
+                        for (q=0; q<queueData.length;q++) {
+                            if (queueData[q].user === userEmail) {
+                                waitingPosition = q
+                            }
+                        }
+                        
+                        if (queueData[0].user === userEmail) {
+                            const {data: dataOne, error: errorOne} = await supabase
+                        .from('users')
+                        .select ()
+                        .eq('parent_id', data[0].id)
+                        let userId = dataOne[0].id
+                        localStorage.setItem('id', userId)
+                        window.location.replace("../Form/FormTwo.html")
+                        } else {
+                            alert(`You are in the queue to access the ASA selection, please wait. ${waitingPosition} people/person are/is in front of you.`)
+                            await sleep(5000)
+                        }
+                    }
                 }
         }
     }, 2);

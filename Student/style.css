@@ -20,6 +20,14 @@ body {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: auto;
 }
+select {
+    margin: 10px 0;
+    padding: 10px;
+    width:300px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
 h1 {
     color: #333333;
     font-size: 32pt;
@@ -46,7 +54,6 @@ input[type="text"] {
     border: 1px solid #cccccc;
     border-radius: 5px;
     font-size: 1rem;
-    box-sizing: border-box;
 }
 input:hover{
     background-color: rgb(202, 202, 202);

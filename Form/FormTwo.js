@@ -4,6 +4,7 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 let userName = localStorage.getItem("name")
 let userGrade = localStorage.getItem("grade")
+let userEmail = localStorage.getItem("user")
 let asaNumber = 0
 const asaIds = []
 const asaActualIds = []
@@ -89,7 +90,7 @@ setTimeout(async () => {
                 } else {
                     asaSlotsLeft.push(0)
                     document.querySelector(`.${asaDays[i]}`).innerHTML += `
-                    <p1>${data[i].name} - no more open slots left.</p1> <br>
+                    <h3>${data[i].name} - no more open slots left.</h3> <br>
                     `
                     asaDays.splice(i, 1, 'replaced')
                     asaNumber+=1
@@ -146,6 +147,11 @@ async function chooseAsas(){
                 }
             }
         }
+        const {error: deleteQueue} = await supabase
+        .from ('queue')
+        .delete ()
+        .eq ('user', userEmail)
+
         window.location.replace("../end/end.html")
     } else {
         alert('You have not checked an option for every day (even if it is No ASAs for this day)')
