@@ -158,11 +158,14 @@ async function chooseAsas(){
                                 console.log(memberError)
                             }
                             for (z=0; z<memberData.length; z++) {
-                                if (asaActualIds[k] === memberData[z].asa) {
-                                    const {error: slotsError} = await supabase
-                                    .from('asa')
-                                    .update({slots: checkData[0].slots})
-                                    .eq('id', asaActualIds[k])
+                                for (y=0; y<asaActualIds.length; y++) {
+                                    if (asaActualIds[y] === memberData[z].asa && !(y===k)) {
+                                        console.log(asaSlotsLeft[y], asaActualsIds[y])
+                                        const {error: slotsError} = await supabase
+                                        .from('asa')
+                                        .update({slots: asaSlotsLeft[y]+1})
+                                        .eq('id', asaActualIds[k])
+                                    }
                                 }
                             }
                             const {error: errorTen} = await supabase
