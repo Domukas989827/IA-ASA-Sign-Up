@@ -116,8 +116,10 @@ async function chooseAsas(){
                             if (memberError) {
                                 console.log(memberError)
                             }
+                            console.log('remaining slots in the asa were:', checkData[0].slots)
                             for (z=0; z<memberData.length; z++) {
                                 if (asaActualIds[k] === memberData[z].asa) {
+                                    console.log('this happened', checkData[0].slots)
                                     const {error: slotsError} = await supabase
                                     .from('asa')
                                     .update({slots: checkData[0].slots})
@@ -134,7 +136,7 @@ async function chooseAsas(){
             }
         }
         if (problem === false) {
-            window.location.replace("../end/end.html")
+            // window.location.replace("../end/end.html")
         }
     } else {
         alert('Please check one option for every day (even if it is No ASAs for this day)')
