@@ -109,44 +109,52 @@ setTimeout(async () => {
         }
     }
 }, 1)
+
+const problem = false
 async function chooseAsas(){
+    const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     if (document.querySelector('input[name="Monday"]:checked') 
         && document.querySelector('input[name="Tuesday"]:checked')
         && document.querySelector('input[name="Wednesday"]:checked')
         && document.querySelector('input[name="Thursday"]:checked')
         && document.querySelector('input[name="Friday"]:checked') ) {
-        const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
         for (k=0;k<asaDays.length;k++) {
-            if (asaDays[k] === 'replaced') {
-                console.log ('at', k, 'it was replaced')
-            } else {
+            if (!(asaDays[k] === 'replaced')) {
                 if (!document.querySelector(`#none`+asaDays[k]).checked) {
                     if (document.querySelector(`#${asaIds[k]}`).checked) {
-                        const { error: errorOne } = await supabase
-                            .from('members')
-                            .insert({
-                            asa: asaActualIds[k],
-                            user: userId
-                            })
-                        if (errorOne) {
-                            console.log('Error:', errorOne)
-                        }
-
-                        console.log("add successful")
-
-                        const {error: errorTwo} = await supabase
+                        const userId = localStorage.getItem('id')
+                        //reinput the asa slots to make sure they didn't change while the user was choosing asas
+                        const {data: checkData, error: checkError} = await supabase
                         .from('asa')
-                        .update({slots: asaSlotsLeft[k]-1})
+                        .select('slots')
                         .eq('id', asaActualIds[k])
-                        if (errorTwo) {
-                            console.log('supabase error when updating slots:', errorTwo)
+                        if (checkData[0].slots>0) {
+                            asaSlotsLeft[k]=checkData[0].slots
+                            const { error: errorOne } = await supabase
+                                .from('members')
+                                .insert({
+                                asa: asaActualIds[k],
+                                user: userId
+                                })
+                            if (errorOne) {
+                                console.log('Error:', errorOne)
+                            }
+
+                            const {error: errorTwo} = await supabase
+                            .from('asa')
+                            .update({slots: asaSlotsLeft[k]-1})
+                            .eq('id', asaActualIds[k])
+                            if (errorTwo) {
+                                console.log('supabase error when updating slots:', errorTwo)
+                            }
                         }
-                        console.log('for asa:',asaActualIds[k],'there are slots:', asaSlotsLeft[k]-1)
                     }
                 }
             }
         }
-        window.location.replace("../end/end.html")
+        if (problem === false) {
+            window.location.replace("../end/end.html")
+        }
     } else {
         alert('You have not checked an option for every day (even if it is No ASAs for this day)')
     }

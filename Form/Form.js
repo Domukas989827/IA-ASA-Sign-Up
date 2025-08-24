@@ -19,7 +19,6 @@ setTimeout(async () => {
         .from ('teachers')
         .select()
     if (data) {
-        console.log('this is data', data)
         for (i=0;i<data.length;i++) {
             let asaName = data[i].name.replaceAll(' ', '')
             asaActualIds.push(data[i].id)
@@ -66,9 +65,11 @@ setTimeout(async () => {
             }
         }
     }
-}, 1)
+}, 10)
 
+const problem = false
 async function chooseAsas(){
+    const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     if (document.querySelector('input[name="Monday"]:checked') 
         && document.querySelector('input[name="Tuesday"]:checked')
         && document.querySelector('input[name="Wednesday"]:checked')
@@ -76,15 +77,18 @@ async function chooseAsas(){
         && document.querySelector('input[name="Friday"]:checked') ) {
 
         for (k=0;k<asaDays.length;k++) {
-            console.log(k)
-            console.log(asaIds, asaDays)
-            if (asaDays[k] === 'replaced') {
-                console.log ('at', k, 'it was replaced')            } else {
-                    if (!document.querySelector(`#none`+asaDays[k]).checked) {
-                        console.log(asaIds)
-                        if (document.querySelector(`#${asaIds[k]}`).checked) {
-                            const userId = localStorage.getItem('id')
-                            const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+            if (!(asaDays[k] === 'replaced')) {
+                if (!document.querySelector(`#none`+asaDays[k]).checked) {
+                    if (document.querySelector(`#${asaIds[k]}`).checked) {
+                        const userId = localStorage.getItem('id')
+                        //reinput the asa slots to make sure they didn't change while the user was choosing asas
+                        const {data: checkData, error: checkError} = await supabase
+                        .from('asa')
+                        .select('slots')
+                        .eq('id', asaActualIds[k])
+                        if (checkData[0].slots>0) {
+                            asaSlotsLeft[k]=checkData[0].slots
+
                             const { error: errorOne } = await supabase
                                 .from('members')
                                 .insert({
@@ -94,23 +98,26 @@ async function chooseAsas(){
                             if (errorOne) {
                                 console.log('Error:', errorOne)
                             }
-                            console.log("add successful")
 
                             const {error: errorTwo} = await supabase
-                            .from('asa')
-                            .update({slots: asaSlotsLeft[k]-1})
-                            .eq('id', asaActualIds[k])
-                            if (errorOne) {
+                                .from('asa')
+                                .update({slots: asaSlotsLeft[k]-1})
+                                .eq('id', asaActualIds[k])
+                            if (errorTwo) {
                                 console.log('supabase error when updating slots:', errorTwo)
                             }
+                        } else {
+                            alert('There are no more slots in one of the ASAs you want to choose. Please refresh the page')
+                            problem = true
                         }
-                    } else {
-                        console.log(asaDays[k], 'is checked none', k)
                     }
+                }
             }
         }
-        const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
-        window.location.replace("../end/end.html")
+        if (problem === false) {
+            window.location.replace("../end/end.html")
+            console.log('there was no problem')
+        }
     } else {
         alert('Please check one option for every day (even if it is No ASAs for this day)')
     }
