@@ -128,8 +128,8 @@ async function chooseAsas(){
                         .from('asa')
                         .select('slots')
                         .eq('id', asaActualIds[k])
+                        asaSlotsLeft[k]=checkData[0].slots
                         if (checkData[0].slots>0) {
-                            asaSlotsLeft[k]=checkData[0].slots
                             const { error: errorOne } = await supabase
                                 .from('members')
                                 .insert({
@@ -163,7 +163,7 @@ async function chooseAsas(){
                                         console.log(asaIds[y],asaSlotsLeft[y])
                                         const {error: slotsError} = await supabase
                                         .from('asa')
-                                        .update({slots: asaSlotsLeft[y]+1})
+                                        .update({slots: asaSlotsLeft[y]})
                                         .eq('id', asaActualIds[y])
                                     }
                                 }
