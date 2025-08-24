@@ -24,36 +24,36 @@ setTimeout(async () => {
         console.log('there was an error in placing slots into array', errorTwo)
     }
     const {data: dataOne, error: errorOne} = await supabase
-                        .from('members')
-                        .select()
-                        .eq('user', userId)
-                if (errorOne) {
-                    console.log('Error in getting user data:', errorOne)
-                } else if (dataOne.length>0) {
-                    for (b=0;b<dataOne.length;b++) {
-                            for (y=0;y<asaActualIds.length;y++) {
-                                if (asaActualIds[y] === dataOne[b].asa) {
-                                    const { error: errorThree } = await supabase
-                                    .from('asa')
-                                    .update({
-                                    slots: asaSlotsLeft[y]+1,
-                                    })
-                                    .eq ('id', dataOne[b].asa)
-                                    asaSlotsLeft[y]+=1
-                                    if (errorThree) {
-                                        console.log('Error in updating slots:', errorThree)
-                                    }
+        .from('members')
+        .select()
+        .eq('user', userId)
+            if (errorOne) {
+                console.log('Error in getting user data:', errorOne)
+            } else if (dataOne.length>0) {
+                for (b=0;b<dataOne.length;b++) {
+                        for (y=0;y<asaActualIds.length;y++) {
+                            if (asaActualIds[y] === dataOne[b].asa) {
+                                const { error: errorThree } = await supabase
+                                .from('asa')
+                                .update({
+                                slots: asaSlotsLeft[y]+1,
+                                })
+                                .eq ('id', dataOne[b].asa)
+                                asaSlotsLeft[y]+=1
+                                if (errorThree) {
+                                    console.log('Error in updating slots:', errorThree)
                                 }
                             }
                         }
-                }
-                const {error: errorFour} = await supabase
-                    .from('members')
-                    .delete()
-                    .eq('user', userId)
-                if (errorFour) {
-                    console.log("error when deleting user from asas:", errorFour)
-                }
+                    }
+            }
+            const {error: errorFour} = await supabase
+                .from('members')
+                .delete()
+                .eq('user', userId)
+            if (errorFour) {
+                console.log("error when deleting user from asas:", errorFour)
+            }
     
 
     const {data, error} = await supabase
@@ -110,7 +110,7 @@ setTimeout(async () => {
     }
 }, 1)
 
-const problem = false
+let problem = false
 async function chooseAsas(){
     const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     if (document.querySelector('input[name="Monday"]:checked') 
@@ -147,6 +147,28 @@ async function chooseAsas(){
                             if (errorTwo) {
                                 console.log('supabase error when updating slots:', errorTwo)
                             }
+                        } else {
+                            alert('There are no more slots in one of the ASAs you want to choose. Please refresh the page')
+                            problem = true
+                            const {data: memberData, error: memberError} = await supabase
+                            .from('members')
+                            .select()
+                            .eq('user', userId)
+                            if (memberError) {
+                                console.log(memberError)
+                            }
+                            for (z=0; z<memberData.length; z++) {
+                                if (asaActualIds[k] === memberData[z].asa) {
+                                    const {error: slotsError} = await supabase
+                                    .from('asa')
+                                    .update({slots: checkData[0].slots})
+                                    .eq('id', asaActualIds[k])
+                                }
+                            }
+                            const {error: errorTen} = await supabase
+                            .from('members')
+                            .delete()
+                            .eq('user', userId)
                         }
                     }
                 }

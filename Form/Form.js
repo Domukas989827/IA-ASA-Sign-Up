@@ -67,7 +67,7 @@ setTimeout(async () => {
     }
 }, 10)
 
-const problem = false
+let problem = false
 async function chooseAsas(){
     const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     if (document.querySelector('input[name="Monday"]:checked') 
@@ -109,6 +109,25 @@ async function chooseAsas(){
                         } else {
                             alert('There are no more slots in one of the ASAs you want to choose. Please refresh the page')
                             problem = true
+                            const {data: memberData, error: memberError} = await supabase
+                            .from('members')
+                            .select()
+                            .eq('user', userId)
+                            if (memberError) {
+                                console.log(memberError)
+                            }
+                            for (z=0; z<memberData.length; z++) {
+                                if (asaActualIds[k] === memberData[z].asa) {
+                                    const {error: slotsError} = await supabase
+                                    .from('asa')
+                                    .update({slots: checkData[0].slots})
+                                    .eq('id', asaActualIds[k])
+                                }
+                            }
+                            const {error: errorTen} = await supabase
+                            .from('members')
+                            .delete()
+                            .eq('user', userId)
                         }
                     }
                 }
@@ -116,7 +135,6 @@ async function chooseAsas(){
         }
         if (problem === false) {
             window.location.replace("../end/end.html")
-            console.log('there was no problem')
         }
     } else {
         alert('Please check one option for every day (even if it is No ASAs for this day)')
