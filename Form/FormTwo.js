@@ -159,12 +159,12 @@ async function chooseAsas(){
                             }
                             for (z=0; z<memberData.length; z++) {
                                 for (y=0; y<asaActualIds.length; y++) {
-                                    if (asaActualIds[y] === memberData[z].asa && !(y===k)) {
-                                        console.log(asaSlotsLeft[y], asaActualsIds[y])
+                                    if (asaActualIds[y] === memberData[z].asa && !(y === k)) {
+                                        console.log(asaIds[y],asaSlotsLeft[y])
                                         const {error: slotsError} = await supabase
                                         .from('asa')
                                         .update({slots: asaSlotsLeft[y]+1})
-                                        .eq('id', asaActualIds[k])
+                                        .eq('id', asaActualIds[y])
                                     }
                                 }
                             }
@@ -196,7 +196,7 @@ async function overlayPopUp(id) {
     }
     document.querySelector('.overlay').innerHTML = `
     <button onclick="closeOverlay()">Close description</button>
-    <h1>${data[0].name}</h1>
+    <h3>${data[0].name}</h3>
     <p>${data[0].description}</p>
     `
     document.querySelector('.overlayBackground').style.display = 'flex';
