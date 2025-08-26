@@ -21,6 +21,7 @@ setTimeout(async () => {
     if (data) {
         for (i=0;i<data.length;i++) {
             let asaName = data[i].name.replaceAll(' ', '')
+            console.log(asaName)
             asaActualIds.push(data[i].id)
             asaDays.push(data[i].day)
             if (data[i].lowest_grade<=userGrade && userGrade<=data[i].highest_grade) {
@@ -80,6 +81,7 @@ async function chooseAsas(){
         for (k=0;k<asaDays.length;k++) {
             if (!(asaDays[k] === 'replaced')) {
                 if (!document.querySelector(`#none`+asaDays[k]).checked) {
+                    console.log(asaIds[k], document.querySelector(`#${asaIds[k]}`))
                     if (document.querySelector(`#${asaIds[k]}`).checked) {
                         const userId = localStorage.getItem('id')
                         //reinput the asa slots to make sure they didn't change while the user was choosing asas
