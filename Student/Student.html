@@ -7,27 +7,27 @@
     <title>ASA Selection Form</title>
 </head>
 <body>
-    <h1>Registration is closed. 
+    <!-- <h1>Registration is closed. 
         <br> 
-        If you need to, messsage our Athelic Director, Jason Romey. Email: jason.romey@isriga.lv</h1>
-    <!-- <div class="firstPage">
+        If you need to, messsage our Athelic Director, Jason Romey. Email: jason.romey@isriga.lv</h1> -->
+    <div class="firstPage">
         <div class="container">
-        <h1>Welcome To The ASA Selection Form</h1>
-        <div id="emailBox">
-            <label for="userEmail">Enter Email</label>
-            <input type="text" id="userEmail" placeholder="example@email.com">
+            <h1>Welcome To The ASA Selection Form</h1>
+            <div id="emailBox">
+                <label for="userEmail">Enter Email</label>
+                <input type="text" id="userEmail" placeholder="example@email.com">
+            </div>
+            <div id="parentBoxDiv">
+                <input type="checkbox" id="parentBox">
+                <label for="parentBox"> I am a parent</label>
+            </div>
+            <button onclick="signIn()" id="signIn">Enter Form</button>
+            <br>
+            <h2>Not your first time filling out this form?</h2>
+            <label for="logIn">Enter the email you previously used and press this button:</label>
+            <button onclick="logIn()" id="logIn">Sign in</button>
         </div>
-        <div id="parentBoxDiv">
-            <input type="checkbox" id="parentBox">
-            <label for="parentBox"> I am a parent</label>
-        </div>
-        <button onclick="signIn()" id="signIn">Enter Form</button>
-        <br>
-        <h2>Not your first time filling out this form?</h2>
-        <label for="logIn">Enter the email you previously used and press this button:</label>
-        <button onclick="logIn()" id="logIn">Sign in</button>
-        </div>
-    </div> -->
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="Student.js"></script>
 </body>

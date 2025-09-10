@@ -4,8 +4,6 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 
 let userName = localStorage.getItem("name")
 let userGrade = localStorage.getItem("grade")
-let userEmail = localStorage.getItem("user")
-let asaNumber = 0
 const asaIds = []
 const asaActualIds = []
 const asaDays = []
@@ -15,61 +13,48 @@ setTimeout(async () => {
     const {data, error} = await supabase
         .from('asa')
         .select()
+        .lte("lowest_grade", userGrade) // less or equal than
+        .gte("highest_grade", userGrade) // greater or equal than
     const {data: teacherData, error: teacherError} = await supabase
         .from ('teachers')
         .select()
     if (data) {
         for (i=0;i<data.length;i++) {
             let asaName = data[i].name.replaceAll(' ', '')
-            console.log(asaName)
             asaActualIds.push(data[i].id)
             asaDays.push(data[i].day)
-            if (data[i].lowest_grade<=userGrade && userGrade<=data[i].highest_grade) {
-                if (data[i].slots > 0) {
-                    asaSlotsLeft.push(data[i].slots)
-                    document.querySelector(`.${asaDays[i]}`).innerHTML += `
-                    <input type="radio" id="${asaName}" name="${asaDays[i]}">
-                    <label for="${asaName}">${data[i].name}</label>
-                    <button class="description_button" onclick="overlayPopUp(${asaActualIds[i]})">Short description</button>
-                    <br>
-                    Duration: ${data[i].begin_time} - ${data[i].end_time} <br>
-                    Available places left: ${data[i].slots} out of ${data[i].initial_slots}<br>
-                    `
-                    for (t=0; t<teacherData.length; t++){
-                        if (data[i].teacher_id === teacherData[t].id) {
-                            document.querySelector(`.${asaDays[i]}`).innerHTML += `
-                            Teacher: ${teacherData[t].first_name} ${teacherData[t].last_name} <br>
-                            `
-                        }
+            if (data[i].slots > 0) {
+                asaSlotsLeft.push(data[i].slots)
+                document.querySelector(`.${asaDays[i]}`).innerHTML += `
+                <input type="radio" id="${asaName}" name="${asaDays[i]}">
+                <label for="${asaName}">${data[i].name}</label>
+                <button class="description_button" onclick="overlayPopUp(${asaActualIds[i]})">Short description</button>
+                <br>
+                Duration: ${data[i].begin_time} - ${data[i].end_time} <br>
+                Available places left: ${data[i].slots} out of ${data[i].initial_slots}<br>
+                `
+                for (t=0; t<teacherData.length; t++){
+                    if (data[i].teacher_id === teacherData[t].id) {
+                        document.querySelector(`.${asaDays[i]}`).innerHTML += `
+                        Teacher: ${teacherData[t].first_name} ${teacherData[t].last_name} <br>
+                        `
                     }
-                    asaNumber+=1
-                    asaIds.push(asaName)
-
-                } else {
-                    asaSlotsLeft.push(0)
-                    document.querySelector(`.${asaDays[i]}`).innerHTML += `
-                    <h3>${data[i].name} - no more open slots left.</h3> <br>
-                    `
-                    asaDays.splice(i, 1, 'replaced')
-                    asaNumber+=1
-                    asaIds.push(asaName)
                 }
+                asaIds.push(asaName)
+
             } else {
-                asaDays[i]='no'
-            }
-        }
-        for (p=0;p<asaDays.length;p++) {
-            if (asaDays[p]==='no') {
-                asaDays.splice(p, 1)
-                asaActualIds.splice(p, 1)
-                p-=1
+                asaSlotsLeft.push(0)
+                document.querySelector(`.${asaDays[i]}`).innerHTML += `
+                <h3>${data[i].name} - no more open slots left.</h3> <br>
+                `
+                asaDays.splice(i, 1, 'replaced')
+                asaIds.push(asaName)
             }
         }
     }
 }, 10)
 
 let problem = false
-console.log(asaActualIds)
 async function chooseAsas(){
     const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     if (document.querySelector('input[name="Monday"]:checked') 
@@ -81,7 +66,6 @@ async function chooseAsas(){
         for (k=0;k<asaDays.length;k++) {
             if (!(asaDays[k] === 'replaced')) {
                 if (!document.querySelector(`#none`+asaDays[k]).checked) {
-                    console.log(asaIds[k], document.querySelector(`#${asaIds[k]}`))
                     if (document.querySelector(`#${asaIds[k]}`).checked) {
                         const userId = localStorage.getItem('id')
                         //reinput the asa slots to make sure they didn't change while the user was choosing asas
@@ -118,11 +102,9 @@ async function chooseAsas(){
                             if (memberError) {
                                 console.log(memberError)
                             }
-                            console.log(memberData)
                             for (z=0; z<memberData.length; z++) {
                                 for (y=0; y<asaActualIds.length; y++) {
                                     if (asaActualIds[y] === memberData[z].asa && !(y === k)) {
-                                        console.log(asaIds[y],asaSlotsLeft[y])
                                         const {error: slotsError} = await supabase
                                         .from('asa')
                                         .update({slots: asaSlotsLeft[y]})
