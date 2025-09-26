@@ -75,25 +75,26 @@ async function chooseAsas(){
                         .eq('id', asaActualIds[k])
                         asaSlotsLeft[k]=checkData[0].slots
                         if (checkData[0].slots>0) {
-                            const { error: errorOne } = await supabase
-                                .from('members')
-                                .insert({
-                                asa: asaActualIds[k],
-                                user: userId
-                                })
-                            if (errorOne) {
-                                console.log('Error:', errorOne)
-                            }
+                            if (problem === false) {
+                                const { error: errorOne } = await supabase
+                                    .from('members')
+                                    .insert({
+                                    asa: asaActualIds[k],
+                                    user: userId
+                                    })
+                                if (errorOne) {
+                                    console.log('Error:', errorOne)
+                                }
 
-                            const {error: errorTwo} = await supabase
-                                .from('asa')
-                                .update({slots: asaSlotsLeft[k]-1})
-                                .eq('id', asaActualIds[k])
-                            if (errorTwo) {
-                                console.log('supabase error when updating slots:', errorTwo)
+                                const {error: errorTwo} = await supabase
+                                    .from('asa')
+                                    .update({slots: asaSlotsLeft[k]-1})
+                                    .eq('id', asaActualIds[k])
+                                if (errorTwo) {
+                                    console.log('supabase error when updating slots:', errorTwo)
+                                }
                             }
                         } else {
-                            alert('There are no more slots in one of the ASAs you want to choose. Please refresh the page')
                             problem = true
                             const {data: memberData, error: memberError} = await supabase
                             .from('members')
@@ -123,6 +124,8 @@ async function chooseAsas(){
         }
         if (problem === false) {
             window.location.replace("../end/end.html")
+        } else {
+            alert('There are no more slots in at least one of the ASAs you want to choose. Please refresh the page')
         }
     } else {
         alert('Please check one option for every day (even if it is No ASAs for this day)')
