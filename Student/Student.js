@@ -13,7 +13,7 @@ function signIn() {
         } else {
             const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
             if (!document.querySelector('#parentBox').checked) {
-                const { data, error } = await supabase
+                const { data, error: firstError } = await supabase
                 .from('users')
                 .select()
                 .eq('email', userEmail)
@@ -40,6 +40,7 @@ function signIn() {
                         } else {
                             document.querySelector(".firstPage").innerHTML = `
                         <div class="secondPage">
+                        <h1>Enter your information:</h1>
                         <label for="user_name">Enter your name:</label>
                         <input type="text" id="user_name" placeholder="e.g. Jason">
                         <br>
@@ -155,6 +156,7 @@ function addUserInfo() {
         const userEmail = localStorage.getItem("user")
         const parentEmail = document.querySelector("#parent_email").value
         localStorage.setItem("grade", userGrade)
+        localStorage.setItem("multipleChildren", false)
         let parentId = 0
         
 

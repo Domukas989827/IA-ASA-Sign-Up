@@ -2,7 +2,6 @@ const { createClient } = supabase;
 const SUPABASE_URL = 'https://dbwxeoshrqssbrvtggbf.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRid3hlb3NocnFzc2JydnRnZ2JmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2NzI2NTYsImV4cCI6MjA1NDI0ODY1Nn0.nf7q3-2sJI9uwQ2w-GxJ4iKUTZlYAjuYdy_pOMfiJBg'
 
-
 const asas = []
 const asaNames = []
 const userInfo = [
@@ -15,7 +14,6 @@ const userInfo = [
 ]
 let memberData
 let asaFullData
-let tempParentDataLength
 setTimeout(async () => {
     const supabase = await createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
     const {data: asaMemberData, error} = await supabase
@@ -67,7 +65,7 @@ setTimeout(async () => {
                     asas[x] = asaFullData[y].id
                 }
             }
-        } // sorting asas based on sorted asaNames
+        } // sorting asa ids based on sorted asaNames
 
     const {data: userData, error: errorThree} = await supabase
         .from('users')
@@ -75,6 +73,7 @@ setTimeout(async () => {
     if (errorThree) {
         console.log('Error when getting user data:', errorThree)
     }
+    
     const {data: parentData, error: errorFour} = await supabase
         .from('parents')
         .select()
@@ -101,7 +100,7 @@ setTimeout(async () => {
         for (d=0; d<parentData.length; d++) {
         if (parentData[d] == null) {
             console.log('this shouldnt be here')
-        }   else if (parentData[d].id === userData[c].parent_id) {
+        }  else if (parentData[d].id === userData[c].parent_id) {
                 userInfo[5].push(parentData[d].email)
             }
         }
@@ -155,18 +154,27 @@ function sort() {
         <button onclick="sort()">Sort</button>`
         let oneAsaMembers = []
         let oneAsaMemberGrades = []
-        for (m=0; m<asas.length; m++) {
+        for (m=0; m<asas.length; m++) {//length-1????
             for (n=0; n<memberData.length; n++) {
-                if (memberData[n].asa === asas[m]) {
+                if (memberData[n].asa === asas[m]) { 
                     oneAsaMembers.push(memberData[n].user)
                     for (t=0; t<userInfo[0].length; t++) {
                         if (userInfo[0][t] === memberData[n].user) {
-                            oneAsaMemberGrades.push(userInfo[4][t])
+                            if (userInfo[4][t] === 'Kindergarten') {
+                                oneAsaMemberGrades.push(0)
+                            } else if (userInfo[4][t] === 'Maple'){
+                                oneAsaMemberGrades.push(-1)
+                            } else if (userInfo[4][t] === 'Linden'){
+                                oneAsaMemberGrades.push(-2)
+                            } else if (userInfo[4][t] === 'Oak'){
+                                oneAsaMemberGrades.push(-3)
+                            } else {
+                                oneAsaMemberGrades.push(userInfo[4][t])
+                            }
                         }
                     }
                 }
             }
-
             for (k=0; k<oneAsaMemberGrades.length; k++) {
                 let minIndex = k
                 for (l=k+1; l<oneAsaMemberGrades.length; l++) {
@@ -241,7 +249,7 @@ function sort() {
                 }
             }
 
-            oneAsaMemberNames.sort()
+            oneAsaMemberNames.sort() //capital letters have priority
 
             for (k=0; k<oneAsaMembers.length; k++) {
                 for (l=0; l<userInfo[1].length; l++) {
