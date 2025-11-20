@@ -67,7 +67,7 @@ setTimeout(async () => {
 
     if (multipleChildren) {
         document.querySelector("#another_child").innerHTML += `
-            <h3>If you want to fill in the form for another child, click the following button, enter your email, and use the 'Sign In' button.</h3>
+            <h3>If you want to fill in the form for another child, click the following button, enter your email, and use the 'Log In' button.</h3>
             <button onclick="redirectBack()">Go back to beginning</button>
             `
     }
