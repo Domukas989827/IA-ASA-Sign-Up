@@ -1,7 +1,6 @@
 const { createClient } = supabase;
 const SUPABASE_URL = 'https://dbwxeoshrqssbrvtggbf.supabase.co'
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRid3hlb3NocnFzc2JydnRnZ2JmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mzg2NzI2NTYsImV4cCI6MjA1NDI0ODY1Nn0.nf7q3-2sJI9uwQ2w-GxJ4iKUTZlYAjuYdy_pOMfiJBg'
-let userName = localStorage.getItem("name")
 let userGrade = localStorage.getItem("grade")
 let asaNumber = 0
 const asaIds = []

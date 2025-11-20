@@ -122,6 +122,7 @@ setTimeout(async () => {
             <th>Parent Email:</th>
         </table>
         `
+        console.log(userInfo)
         for (f=0; f<members.length; f++) {
             let index = 0
             for (g=0; g<userInfo[0].length; g++) {
@@ -137,7 +138,7 @@ setTimeout(async () => {
             <td> ${userInfo[4][index]} </td>
             <td> ${userInfo[5][index]} </td>
             </tr>
-        `
+            `
         }
     }
 }, 1)
